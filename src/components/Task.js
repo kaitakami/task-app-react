@@ -2,10 +2,6 @@ import { Component } from "react";
 import styles from "../styles/Task.module.css";
 
 class Task extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     const { children, task, tasks, handleRemove, handleEdit } = this.props;
     return (

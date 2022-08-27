@@ -14,12 +14,32 @@ class App extends Component {
     };
   }
 
+  componentDidMount() {
+    if (localStorage.getItem("tasks")) {
+      this.setState({
+        tasks: [...JSON.parse(localStorage.getItem("tasks"))],
+      });
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    let tasksValueChanged = !prevState.tasks.every(
+      (task, i) => task === this.state.tasks[i]
+    );
+    if (
+      tasksValueChanged ||
+      prevState.tasks.length !== this.state.tasks.length
+    ) {
+      localStorage.setItem("tasks", JSON.stringify(this.state.tasks));
+    }
+  }
+
   handleRemove = (deletedTask) => {
     // eslint-disable-next-line no-restricted-globals
     const remove = confirm("Do you want to remove this task?");
     if (remove) {
       const updatedArr = this.state.tasks.filter(
-        (task) => task.id != deletedTask.id
+        (task) => task.id !== deletedTask.id
       );
       this.setState({
         tasks: [...updatedArr],
@@ -51,6 +71,7 @@ class App extends Component {
         tasks: [...this.state.tasks, this.state.task],
       });
     }
+
     this.setState({
       task: {
         name: "",
@@ -87,7 +108,11 @@ class App extends Component {
                 placeholder="ex) Clean the house"
                 required
               />
-              <input type="submit" value={edit ? "Edit" : "Add"} className="button-27" />
+              <input
+                type="submit"
+                value={edit ? "Edit" : "Add"}
+                className="button-27"
+              />
             </div>
           </form>
           <Overview

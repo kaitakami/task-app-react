@@ -2,10 +2,6 @@ import { Component } from "react";
 import Task from "./Task";
 
 class Overview extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     return (
       <div className="container">
@@ -14,7 +10,17 @@ class Overview extends Component {
             <h2>Your tasks</h2>
             <div className="tasks">
               {this.props.tasks.map((task) => {
-                return <Task key={task.id} task={task} tasks={this.props.tasks} handleRemove={this.props.handleRemove} handleEdit={this.props.handleEdit} >{task.name}</Task>;
+                return (
+                  <Task
+                    key={task.id}
+                    task={task}
+                    tasks={this.props.tasks}
+                    handleRemove={this.props.handleRemove}
+                    handleEdit={this.props.handleEdit}
+                  >
+                    {task.name}
+                  </Task>
+                );
               })}
             </div>
           </>
